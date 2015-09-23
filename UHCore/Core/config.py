@@ -10,7 +10,8 @@ server_config = {
   'mysql_log_server':   'localhost',#'rh-database',
   'mysql_log_user':     'rhUser',
   'mysql_log_password': 'waterloo',
-  'mysql_log_db':       'AccompanyResources',
+  'mysql_log_db':       'TeachMeTest',
+  #'mysql_log_db':       'Adeline',
   'mysql_log_table':    'SensorLog',
   
   'mysql_history_table':'ActionHistory',
@@ -69,17 +70,7 @@ locations_config = {
                                 'offset':(81, 245),
                                 'rotation':-90 
                             }
-                     },
-  'STRI e125': {
-#                     'sensors': ['ZigBee', 'ZigBeeDirect'],
-                     'sensors': ['ZigBee'],
-                     'map': {
-                                'base':'RobotHouseMap.svg',
-                                'scale':0.275,
-                                'offset':(81, 245),
-                                'rotation':-90 
-                            }
-                     },
+                     }
 }
 
 """ Controlls various magic strings that are specific to individulal robot models
@@ -184,6 +175,20 @@ robot_config = {
                                                               }
                                             },
                                    },
+                'UH Sunflower': {
+                                   'hostname': 'sf1-1-pc1',
+                                   'tray': { 
+                                                'positions': { 
+                                                              'raised': 'open', 
+                                                              'lowered': 'closed',
+                                                              }
+                                            },
+                                   'head': { 
+                                                'positions': { 
+                                                              'front': 'home', 'back': 'back_right' 
+                                                              }
+                                            },
+                                   },
                 'Sunflower 1-2': {
                                    'tray': { 
                                                 'positions': { 
@@ -196,6 +201,9 @@ robot_config = {
                                                               }
                                             },
                                    },
+                'Roomba 760': {
+                                   'hostname': 'roomba760:9001',
+                              },
                 }
 
 """ Threshold level used to indicate when to display an action possibility on the siena gui """

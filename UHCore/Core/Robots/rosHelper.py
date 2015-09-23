@@ -155,13 +155,10 @@ class ROS(object):
             env = {}
             for line in data.splitlines():
                 try:
-                    key, value = line.split("=", 1)
+                    key, value = line.split('=', 1)
                     env[key] = value
-                except ValueError:
-                    #TODO: This happens when an environment value has a newline in it
-                    #  should fine a proper way to handle it in the future
+                except Exception as e:
                     continue
-            #env = dict((line.split("=", 1) for line in data.splitlines()))
             ROS._userVars = env
         
         return ROS._userVars
@@ -224,8 +221,7 @@ class ROS(object):
                     rosEnv.update(ros_config['envVars'])
             else:
                 print >> sys.stderr, "Unable to read ros bash script, file not found: %s" % bashScript
-                return {}
-
+                
             ROS._envVars[version] = (diffEnv, rosEnv)
 
         if onlyDifferent:

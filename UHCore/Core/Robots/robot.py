@@ -442,8 +442,9 @@ class ROSRobot(Robot):
         
         try:
             ret = {'name': componentName, 'positions': state.actual.positions, 'goals': state.desired.positions, 'joints': state.joint_names }
-        except:
-            print "Error retrieving joint state" 
+        except Exception as e:
+            print "Error retrieving joint state for %s" % componentName
+            print e
             ret = {'name': componentName, 'positions': (), 'goals': (), 'joints': () }
             
         if dontResolveName:

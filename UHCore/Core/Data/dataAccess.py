@@ -164,6 +164,19 @@ class UserInterface(object):
                 }
         
         return self._sql.saveData(sql, args) >= 0
+
+    def getResponse(self, sequenceName):
+        sql = 'SELECT guiMsgResult  FROM `%s` ' % (self._guiQuestionTable)
+        sql += ' WHERE `name` = %(seqName)s'
+	args = { 'seqName': sequenceName }
+        
+        data = self._sql.getSingle(sql, args)
+        if data != None:
+            return {
+                    'response': data['guiMsgResult'],
+                   }
+        else:
+            return None
         
     def getResponses(self, sequenceName=None):
         sql = 'SELECT * FROM `%s`' % (self._responseTable)
@@ -634,8 +647,8 @@ class Sensors(object):
             sql += " AND `%s`.`name` like" % (self._sensorTable) + " %(name)s"
             args = {'name': sensorName}
         if onlyPhysical:
-            sql += " AND `%s`.`ChannelDescriptor` != 'N/A' AND `%s`.`ChannelDescriptor` != ''" % (self._sensorTable, self._sensorTable)
-
+            sql += " AND `%s`.`sensorId` < 500" % (self._sensorTable)
+            
         return self._sql.getData(sql, args)
 
     def saveSensorLog(self, sensorId, value, status, timestamp=None, room='', channel=''):

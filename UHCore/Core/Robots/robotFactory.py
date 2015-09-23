@@ -35,7 +35,7 @@ class Factory(object):
         if robotName.lower().startswith('care-o-bot'):
             import careobot
             if robot_config.has_key(robotName) and robot_config[robotName].has_key('hostname'):
-                rosMaster = 'http://%s:11311'
+                rosMaster = 'http://%s:11311' % robot_config[robotName]['hostname']
             else:
                 cobVersion = robotName[11:].replace('.', '-')
                 rosMaster = "http://cob%s-pc1:11311" % cobVersion
@@ -43,11 +43,25 @@ class Factory(object):
         elif robotName.lower().startswith('sunflower'):
             import sunflower
             if robot_config.has_key(robotName) and robot_config[robotName].has_key('hostname'):
-                rosMaster = 'http://%s:11311'
+                rosMaster = 'http://%s:11311' % robot_config[robotName]['hostname']
             else:
-                cobVersion = robotName[10:].replace('.', '-')
-                rosMaster = "http://sunflower%s-pc1:11311" % cobVersion
+                sfVersion = robotName[10:].replace('.', '-')
+                rosMaster = "http://sf%s-pc1:11311" % sfVersion
             robot = sunflower.Sunflower(robotName, rosMaster)
+        elif robotName.lower().startswith('uh sunflower'):
+            import sunflower
+            if robot_config.has_key(robotName) and robot_config[robotName].has_key('hostname'):
+                rosMaster = 'http://%s:11311' % robot_config[robotName]['hostname']
+            else:
+                rosMaster = "http://sf1-1-pc1:11311"
+            robot = sunflower.Sunflower(robotName, rosMaster)
+        elif robotName.lower().startswith('roomba'):
+            import roomba
+            if robot_config.has_key(robotName) and robot_config[robotName].has_key('hostname'):
+                uri = 'http://%s' % robot_config[robotName]['hostname']
+            else:
+                uri = 'roomba'
+            robot = roomba.Roomba(robotName, uri)
         elif robotName.lower().startswith('dummy'):
             import dummy
             robot = dummy.DummyRobot(robotName)
